@@ -9,38 +9,43 @@ class AnimalController extends Controller
 {
     public function index()
     {
-        $animais = Animal::all();
-        return view('animais.index', compact('animais'));
+        $animals = Animal::all();
+        return view('animals.index', compact('animals'));
     }
     
     public function create()
     {
-        return view('animais.create');
+        return view('animals.create');
     }
     
     public function store(Request $request)
     {
+        $request->validate([
+            'nome' => 'required|string|max:255',
+            'especie' => 'required|string|max:255',
+        ]);
+        
         Animal::create($request->all());
-        return redirect('animais')->with('success', 'Animal created successfully.');
+        return redirect('animals')->with('success', 'Animal created successfully.');
     }
     
     public function edit($id)
     {
         $Animal = Animal::findOrFail($id);
-        return view('animais.edit', compact('Animal'));
+        return view('animals.edit', compact('Animal'));
     }
     
     public function update(Request $request, $id)
     {
         $Animal = Animal::findOrFail($id);
         $Animal->update($request->all());
-        return redirect('animais')->with('success', 'Animal updated successfully.');
+        return redirect('animals')->with('success', 'Animal updated successfully.');
     }
     
     public function destroy($id)
     {
         $Animal = Animal::findOrFail($id);
         $Animal->delete();
-        return redirect('animais')->with('success', 'Animal deleted successfully.');
+        return redirect('animals')->with('success', 'Animal deleted successfully.');
     }
 }

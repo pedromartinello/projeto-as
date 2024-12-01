@@ -13,8 +13,8 @@ return new class extends Migration
     {
         Schema::create('carros', function (Blueprint $table) {
             $table->id();
-            $table->string('modelo');
-            $table->year('ano');
+            $table->string('modelo',255);
+            $table->integer('ano');
             $table->unsignedBigInteger('pessoa_id');
             $table->foreign('pessoa_id')->references('id')->on('pessoas')->onDelete('cascade');
             $table->timestamps();

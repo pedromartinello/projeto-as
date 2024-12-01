@@ -20,6 +20,10 @@ class EmpresaController extends Controller
     
     public function store(Request $request)
     {
+        $request->validate([
+            'nome' => 'required|string|max:255',
+        ]);
+        
         Empresa::create($request->all());
         return redirect('empresas')->with('success', 'Empresa created successfully.');
     }

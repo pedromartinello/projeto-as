@@ -20,6 +20,10 @@ class PedidoController extends Controller
     
     public function store(Request $request)
     {
+        $request->validate([
+            'codigo' => 'required|integer'
+        ]);
+        
         Pedido::create($request->all());
         return redirect('pedidos')->with('success', 'Pedido created successfully.');
     }

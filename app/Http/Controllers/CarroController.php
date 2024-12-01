@@ -20,6 +20,11 @@ class CarroController extends Controller
     
     public function store(Request $request)
     {
+        $request->validate([
+            'modelo' => 'required|string|max:255',
+            'ano' => 'required|integer'
+        ]);
+        
         Carro::create($request->all());
         return redirect('carros')->with('success', 'Carro created successfully.');
     }

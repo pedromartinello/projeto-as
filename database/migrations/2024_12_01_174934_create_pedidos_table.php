@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('pedidos', function (Blueprint $table) {
             $table->id();
-            $table->string('codigo');
+            $table->integer('codigo');
             $table->timestamps();
         });
         

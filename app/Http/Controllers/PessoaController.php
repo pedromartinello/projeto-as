@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Carro;
 use App\Models\Pessoa;
 use Illuminate\Http\Request;
 
@@ -12,35 +13,42 @@ class PessoaController extends Controller
         $pessoas = Pessoa::all();
         return view('pessoas.index', compact('pessoas'));
     }
-    
+
     public function create()
     {
-        return view('pessoas.create');
+        $carros = Carro::all();
+        return view('pessoas.create', compact('carros'));
     }
-    
+
     public function store(Request $request)
     {
+        $request->validate([
+            'nome' => 'required|string|max:255',
+            'idade' => 'required|integer',
+        ]);
+
         Pessoa::create($request->all());
-        return redirect('pessoas')->with('success', 'Pessoa created successfully.');
+        return redirect('pessoas')->with('success', 'Pessoa criada com sucesso.');
     }
-    
+
     public function edit($id)
     {
-        $Pessoa = Pessoa::findOrFail($id);
-        return view('pessoas.edit', compact('Pessoa'));
+        $pessoa = Pessoa::findOrFail($id);
+        $carros = Carro::all();
+        return view('pessoas.edit', compact('pessoa', 'carros'));
     }
-    
+
     public function update(Request $request, $id)
     {
-        $Pessoa = Pessoa::findOrFail($id);
-        $Pessoa->update($request->all());
-        return redirect('pessoas')->with('success', 'Pessoa updated successfully.');
+        $pessoa = Pessoa::findOrFail($id);
+        $pessoa->update($request->all());
+        return redirect('pessoas')->with('success', 'Pessoa atualizada com sucesso.');
     }
-    
+
     public function destroy($id)
     {
-        $Pessoa = Pessoa::findOrFail($id);
-        $Pessoa->delete();
-        return redirect('pessoas')->with('success', 'Pessoa deleted successfully.');
+        $pessoa = Pessoa::findOrFail($id);
+        $pessoa->delete();
+        return redirect('pessoas')->with('success', 'Pessoa deletada com sucesso.');
     }
 }
