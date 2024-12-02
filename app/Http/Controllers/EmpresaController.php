@@ -30,21 +30,21 @@ class EmpresaController extends Controller
     
     public function edit($id)
     {
-        $Empresa = Empresa::findOrFail($id);
-        return view('empresas.edit', compact('Empresa'));
+        $empresa = Empresa::findOrFail($id);
+        return view('empresas.edit', compact('empresa'));
     }
     
     public function update(Request $request, $id)
     {
-        $Empresa = Empresa::findOrFail($id);
-        $Empresa->update($request->all());
+        $empresa = Empresa::findOrFail($id);
+        $empresa->update($request->all());
         return redirect('empresas')->with('success', 'Empresa updated successfully.');
     }
     
     public function destroy($id)
     {
-        $Empresa = Empresa::findOrFail($id);
-        $Empresa->delete();
+        $empresa = Empresa::findOrFail($id);
+        $empresa->delete();
         return redirect('empresas')->with('success', 'Empresa deleted successfully.');
     }
 }

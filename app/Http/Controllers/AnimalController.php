@@ -31,21 +31,21 @@ class AnimalController extends Controller
     
     public function edit($id)
     {
-        $Animal = Animal::findOrFail($id);
-        return view('animals.edit', compact('Animal'));
+        $animal = Animal::findOrFail($id);
+        return view('animals.edit', compact('animal'));
     }
     
     public function update(Request $request, $id)
     {
-        $Animal = Animal::findOrFail($id);
-        $Animal->update($request->all());
+        $animal = Animal::findOrFail($id);
+        $animal->update($request->all());
         return redirect('animals')->with('success', 'Animal updated successfully.');
     }
     
     public function destroy($id)
     {
-        $Animal = Animal::findOrFail($id);
-        $Animal->delete();
+        $animal = Animal::findOrFail($id);
+        $animal->delete();
         return redirect('animals')->with('success', 'Animal deleted successfully.');
     }
 }

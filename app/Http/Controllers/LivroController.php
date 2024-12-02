@@ -12,40 +12,45 @@ class LivroController extends Controller
         $livros = Livro::all();
         return view('livros.index', compact('livros'));
     }
-    
+
     public function create()
     {
         return view('livros.create');
     }
-    
+
     public function store(Request $request)
     {
         $request->validate([
             'titulo' => 'required|string|max:255',
             'autor' => 'required|string|max:255',
         ]);
-        
+
         Livro::create($request->all());
-        return redirect('livros')->with('success', 'Livro created successfully.');
+        return redirect('livros')->with('success', 'Livro criado com sucesso.');
     }
-    
+
     public function edit($id)
     {
-        $Livro = Livro::findOrFail($id);
-        return view('livros.edit', compact('Livro'));
+        $livro = Livro::findOrFail($id);
+        return view('livros.edit', compact('livro'));
     }
-    
+
     public function update(Request $request, $id)
     {
-        $Livro = Livro::findOrFail($id);
-        $Livro->update($request->all());
+        $request->validate([
+            'titulo' => 'required|string|max:255',
+            'autor' => 'required|string|max:255',
+        ]);
+
+        $livro = Livro::findOrFail($id);
+        $livro->update($request->all());
         return redirect('livros')->with('success', 'Livro updated successfully.');
     }
-    
+
     public function destroy($id)
     {
-        $Livro = Livro::findOrFail($id);
-        $Livro->delete();
+        $livro = Livro::findOrFail($id);
+        $livro->delete();
         return redirect('livros')->with('success', 'Livro deleted successfully.');
     }
 }

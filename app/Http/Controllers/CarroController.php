@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Carro;
+use App\Models\Pessoa;
 use Illuminate\Http\Request;
 
 class CarroController extends Controller
@@ -15,7 +16,8 @@ class CarroController extends Controller
     
     public function create()
     {
-        return view('carros.create');
+        $pessoas = Pessoa::all();
+        return view('carros.create', compact('pessoas'));
     }
     
     public function store(Request $request)
@@ -31,21 +33,21 @@ class CarroController extends Controller
     
     public function edit($id)
     {
-        $Carro = Carro::findOrFail($id);
-        return view('carros.edit', compact('Carro'));
+        $carro = Carro::findOrFail($id);
+        return view('carros.edit', compact('carro'));
     }
     
     public function update(Request $request, $id)
     {
-        $Carro = Carro::findOrFail($id);
-        $Carro->update($request->all());
+        $carro = Carro::findOrFail($id);
+        $carro->update($request->all());
         return redirect('carros')->with('success', 'Carro updated successfully.');
     }
     
     public function destroy($id)
     {
-        $Carro = Carro::findOrFail($id);
-        $Carro->delete();
+        $carro = Carro::findOrFail($id);
+        $carro->delete();
         return redirect('carros')->with('success', 'Carro deleted successfully.');
     }
 }

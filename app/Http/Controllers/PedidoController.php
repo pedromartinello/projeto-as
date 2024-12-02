@@ -12,39 +12,43 @@ class PedidoController extends Controller
         $pedidos = Pedido::all();
         return view('pedidos.index', compact('pedidos'));
     }
-    
+
     public function create()
     {
         return view('pedidos.create');
     }
-    
+
     public function store(Request $request)
     {
         $request->validate([
             'codigo' => 'required|integer'
         ]);
-        
-        Pedido::create($request->all());
-        return redirect('pedidos')->with('success', 'Pedido created successfully.');
+
+        Pedido::create($request->only('codigo'));
+        return redirect('pedidos')->with('success', 'Pedido criado com sucesso.');
     }
-    
+
     public function edit($id)
     {
-        $Pedido = Pedido::findOrFail($id);
-        return view('pedidos.edit', compact('Pedido'));
+        $pedido = Pedido::findOrFail($id);
+        return view('pedidos.edit', compact('pedido'));
     }
-    
+
     public function update(Request $request, $id)
     {
-        $Pedido = Pedido::findOrFail($id);
-        $Pedido->update($request->all());
-        return redirect('pedidos')->with('success', 'Pedido updated successfully.');
+        $request->validate([
+            'codigo' => 'required|integer'
+        ]);
+
+        $pedido = Pedido::findOrFail($id);
+        $pedido->update($request->only('codigo'));
+        return redirect('pedidos')->with('success', 'Pedido atualizado com sucesso.');
     }
-    
+
     public function destroy($id)
     {
-        $Pedido = Pedido::findOrFail($id);
-        $Pedido->delete();
-        return redirect('pedidos')->with('success', 'Pedido deleted successfully.');
+        $pedido = Pedido::findOrFail($id);
+        $pedido->delete();
+        return redirect('pedidos')->with('success', 'Pedido deletado com sucesso.');
     }
 }
